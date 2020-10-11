@@ -1,0 +1,70 @@
+<div class="container">
+  <form [formGroup]="premiumCalculationForm">
+    <p align="center">
+      <b>Monthly Premium Calculator</b>
+    </p>
+    <div *ngIf="showPremium">
+      <div align="center" [innerHTML]="message"></div>
+    </div>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required placeholder="Full Name">
+        <mat-error *ngIf="premiumCalculationForm.get('name').hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Age</mat-label>
+        <input matInput placeholder="Age" type="number" min="1" max="100" formControlName="age" required>
+        <mat-error *ngIf="premiumCalculationForm.get('age').hasError('required')">
+          Age is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput placeholder="Date of Birth" formControlName="dob" [max]="tomorrow" [matDatepicker]="picker" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="premiumCalculationForm.get('dob').hasError('required')">
+          Date of Birth is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Death Sum Insured</mat-label>
+        <input matInput placeholder="Sum Insured" type="number" maxlength="6" min="1" step="100" inputmode="numeric" formControlName="deathsuminsured" required>
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
+        <mat-error *ngIf="premiumCalculationForm.get('deathsuminsured').hasError('required')">
+          Death Sum Insured is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Occupation:</mat-label>
+        <mat-select (selectionChange)="onOccupationChange()" formControlName="occupation">
+          <mat-option [value]="-1" [disabled]="true">Please select</mat-option>
+          <mat-option *ngFor="let occupation of occupations" [value]="occupation.text">
+            {{
+                  occupation.text | uppercase
+            }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="premiumCalculationForm.get('occupation').hasError('required')">
+          Occupation is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+  </form>
+</div>
+
+
+
+
